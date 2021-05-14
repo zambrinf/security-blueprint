@@ -9,15 +9,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
+
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public PasswordEncoder getPassowrdEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // AUTHENTICATION MANAGER
+    @Autowired
+    private DataSource dataSource;
+
+
+    // AUTHENTICATION MANAGER - the builder can support multiple authentication providers
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // IN MEMORY
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password(passwordEncoder.encode("admin"))
@@ -26,11 +38,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user")
                 .password(passwordEncoder.encode("user"))
                 .roles("USER");
-    }
 
-    @Bean
-    public PasswordEncoder getPassowrdEncoder() {
-        return new BCryptPasswordEncoder();
+        // JDBC - H2 automatically configured
+        auth.jdbcAuthentication()
+                .passwordEncoder(passwordEncoder)
+                .dataSource(dataSource)
+                // Custom Query when your schema is different - default table names are 'users' and 'authorities'
+                .usersByUsernameQuery("SELECT username, password, enabled " +
+                        "FROM my_users " +
+                        "WHERE username = ?")
+                .authoritiesByUsernameQuery("SELECT username, authority " +
+                        "FROM my_authorities " +
+                        "WHERE username = ?");
     }
 
     // AUTHORIZATION
