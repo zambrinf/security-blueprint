@@ -42,6 +42,11 @@ public class User implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    public Collection<String> getAuthoritiesStringList() {
+        return Arrays.stream(roles.split(REGEX_ROLES))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

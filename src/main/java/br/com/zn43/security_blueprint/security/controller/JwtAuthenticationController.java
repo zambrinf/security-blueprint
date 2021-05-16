@@ -2,6 +2,7 @@ package br.com.zn43.security_blueprint.security.controller;
 
 import br.com.zn43.security_blueprint.security.models.AuthenticationRequest;
 import br.com.zn43.security_blueprint.security.models.AuthenticationResponse;
+import br.com.zn43.security_blueprint.security.models.User;
 import br.com.zn43.security_blueprint.security.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

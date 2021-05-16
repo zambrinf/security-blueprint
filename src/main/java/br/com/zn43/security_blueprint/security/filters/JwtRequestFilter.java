@@ -3,6 +3,7 @@ package br.com.zn43.security_blueprint.security.filters;
 import br.com.zn43.security_blueprint.security.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -43,16 +45,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             username = jwtUtil.extractUsername(jwt);
         }
 
-        if (nonNull(username) && isNull((SecurityContextHolder.getContext().getAuthentication()))) { // Authentication null means the request user is not logged in a stateful session
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-            if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        if (nonNull(username) && isNull((SecurityContextHolder.getContext().getAuthentication())) && Boolean.TRUE.equals(jwtUtil.validateToken(jwt))) { // Authentication null means the request user is not logged in a stateful session
+                List<? extends GrantedAuthority> authorities = jwtUtil.extractAuthorities(jwt);
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 context.setAuthentication(usernamePasswordAuthenticationToken);
                 SecurityContextHolder.setContext(context);
-            }
         }
 
         filterChain.doFilter(request, response);
