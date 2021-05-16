@@ -1,12 +1,14 @@
 package br.com.zn43.security_blueprint.custom_user_details;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Table(name = "User")
+@NoArgsConstructor
+@Table(schema = "myschema", name = "tb_user")
 public class User {
 
     @Id
@@ -24,4 +26,5 @@ public class User {
         this.enabled = enabled;
         this.roles = roles;
     }
+
 }

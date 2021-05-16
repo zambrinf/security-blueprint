@@ -8,7 +8,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return ("<h1>Welcome everyone</h1><p><a href=\"/logout\">Logout</a></p>");
+        return ("<h1>Welcome everyone</h1>");
     }
 
     @GetMapping("/user")
