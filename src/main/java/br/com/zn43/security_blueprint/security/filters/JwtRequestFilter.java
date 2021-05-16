@@ -3,6 +3,7 @@ package br.com.zn43.security_blueprint.security.filters;
 import br.com.zn43.security_blueprint.security.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -48,7 +49,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                context.setAuthentication(usernamePasswordAuthenticationToken);
+                SecurityContextHolder.setContext(context);
             }
         }
 
