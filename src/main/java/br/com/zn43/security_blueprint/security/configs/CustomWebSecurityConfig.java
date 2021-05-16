@@ -54,7 +54,6 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     // AUTHORIZATION
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // The least restrictive patterns must be on the bottom
         http
                 .csrf().disable()
                 .authorizeRequests()
