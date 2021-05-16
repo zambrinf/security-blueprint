@@ -11,6 +11,11 @@ public class HomeController {
         return ("<h1>Welcome everyone</h1>");
     }
 
+    @GetMapping("/home")
+    public String authorization() {
+        return ("<h1>Welcome, authenticated by JWT</h1>");
+    }
+
     @GetMapping("/user")
     public String user() {
         return ("<h1>Welcome User</h1><p><a href=\"/logout\">Logout</a></p>");

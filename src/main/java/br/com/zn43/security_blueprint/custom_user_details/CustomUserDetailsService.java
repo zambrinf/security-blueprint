@@ -1,6 +1,6 @@
 package br.com.zn43.security_blueprint.custom_user_details;
 
-import br.com.zn43.security_blueprint.data_source.UserRepositoryJPA;
+import br.com.zn43.security_blueprint.data_sources.UserRepositoryJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

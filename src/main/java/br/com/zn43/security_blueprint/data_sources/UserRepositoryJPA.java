@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint.data_source;
+package br.com.zn43.security_blueprint.data_sources;
 
 import br.com.zn43.security_blueprint.custom_user_details.User;
 import org.springframework.data.jpa.repository.JpaRepository;
