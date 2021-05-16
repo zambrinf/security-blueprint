@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint;
+package br.com.zn43.security_blueprint.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -25,6 +26,9 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
 
     // AUTHENTICATION MANAGER - the builder can support multiple authentication providers
     @Override
@@ -39,17 +43,21 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder.encode("user"))
                 .roles("USER");
 
-        // JDBC - H2 automatically configured
-        auth.jdbcAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .dataSource(dataSource)
-                // Custom Query when your schema is different - default table names are 'users' and 'authorities'
-                .usersByUsernameQuery("SELECT username, password, enabled " +
-                        "FROM my_users " +
-                        "WHERE username = ?")
-                .authoritiesByUsernameQuery("SELECT username, authority " +
-                        "FROM my_authorities " +
-                        "WHERE username = ?");
+        // JPA - need to create the UserDetailsService - not about JPA itself
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+
+        // JDBC - H2 automatically configured - automatically create tables from resource data.sql and schema.sql
+//        auth.jdbcAuthentication()
+//                .passwordEncoder(passwordEncoder)
+//                .dataSource(dataSource)
+//                // Custom Query when your schema is different - default table names are 'users' and 'authorities'
+//                .usersByUsernameQuery("SELECT username, password, enabled " +
+//                        "FROM my_users " +
+//                        "WHERE username = ?")
+//                .authoritiesByUsernameQuery("SELECT username, authority " +
+//                        "FROM my_authorities " +
+//                        "WHERE username = ?");
     }
 
     // AUTHORIZATION

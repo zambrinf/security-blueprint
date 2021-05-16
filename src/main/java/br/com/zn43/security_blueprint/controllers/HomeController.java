@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint;
+package br.com.zn43.security_blueprint.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,17 +8,17 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return ("<h1>Welcome '/'</h1>");
+        return ("<h1>Welcome everyone</h1><p><a href=\"/logout\">Logout</a></p>");
     }
 
     @GetMapping("/user")
     public String user() {
-        return ("<h1>Welcome User</h1>");
+        return ("<h1>Welcome User</h1><p><a href=\"/logout\">Logout</a></p>");
     }
 
     @GetMapping("/admin")
     public String admin() {
-        return ("<h1>Welcome Admin</h1>");
+        return ("<h1>Welcome Admin</h1><p><a href=\"/logout\">Logout</a></p>");
     }
 
 }
