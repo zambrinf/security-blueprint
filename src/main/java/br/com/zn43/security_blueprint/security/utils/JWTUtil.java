@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -59,7 +60,7 @@ public class JWTUtil {
     }
 
     public List<GrantedAuthority> extractAuthorities(String jwt) {
-        List<String> authorities = (List<String>) extractClaim(jwt, object -> object.get("authorities"));
+        List<String> authorities = extractClaim(jwt, object -> object.get("authorities", ArrayList.class));
         return authorities.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
