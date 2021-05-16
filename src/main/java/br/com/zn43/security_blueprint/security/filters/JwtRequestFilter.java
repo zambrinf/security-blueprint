@@ -1,6 +1,6 @@
-package br.com.zn43.security_blueprint.jwt_authentication;
+package br.com.zn43.security_blueprint.security.filters;
 
-import br.com.zn43.security_blueprint.utils.JWTUtil;
+import br.com.zn43.security_blueprint.security.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

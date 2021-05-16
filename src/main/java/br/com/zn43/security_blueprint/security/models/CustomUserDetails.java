@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint.custom_user_details;
+package br.com.zn43.security_blueprint.security.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

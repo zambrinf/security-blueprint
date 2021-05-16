@@ -1,8 +1,8 @@
-package br.com.zn43.security_blueprint.controllers;
+package br.com.zn43.security_blueprint.security.controller;
 
-import br.com.zn43.security_blueprint.jwt_authentication.AuthenticationRequest;
-import br.com.zn43.security_blueprint.jwt_authentication.AuthenticationResponse;
-import br.com.zn43.security_blueprint.utils.JWTUtil;
+import br.com.zn43.security_blueprint.security.models.AuthenticationRequest;
+import br.com.zn43.security_blueprint.security.models.AuthenticationResponse;
+import br.com.zn43.security_blueprint.security.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

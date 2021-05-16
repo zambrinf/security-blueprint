@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint.jwt_authentication;
+package br.com.zn43.security_blueprint.security.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
