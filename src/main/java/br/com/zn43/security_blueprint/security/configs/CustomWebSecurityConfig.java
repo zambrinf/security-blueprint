@@ -42,11 +42,11 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    // AUTHENTICATION MANAGER - the builder can support multiple authentication providers
+    // AUTHENTICATION - the builder can support multiple authentication providers
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder authBuilder) throws Exception {
         // JPA - need to create the UserDetailsService that retrieves the UserDetails with JPA repository - not about JPA itself
-        auth
+        authBuilder
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
     }
@@ -54,9 +54,6 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     // AUTHORIZATION
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
         // The least restrictive patterns must be on the bottom
         http
                 .csrf().disable()
@@ -66,6 +63,9 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }

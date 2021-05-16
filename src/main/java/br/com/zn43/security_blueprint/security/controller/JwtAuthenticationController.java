@@ -29,6 +29,9 @@ public class JwtAuthenticationController {
     @Autowired
     private JWTUtil jwtUtil;
 
+    /**
+     * User authenticates sending a POST request with username and password, retrieves a JWT
+     */
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authRequest) {
         try {
@@ -42,7 +45,7 @@ public class JwtAuthenticationController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername()); // makes it work only with UserDetailsService, doesnt work with in-memory users
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername()); // makes it coupled to UserDetailsService implementation
         final String jwt = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }

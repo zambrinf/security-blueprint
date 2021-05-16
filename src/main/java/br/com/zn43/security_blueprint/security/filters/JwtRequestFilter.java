@@ -42,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             username = jwtUtil.extractUsername(jwt);
         }
 
-        if (nonNull(username) && isNull((SecurityContextHolder.getContext().getAuthentication()))) {
+        if (nonNull(username) && isNull((SecurityContextHolder.getContext().getAuthentication()))) { // Authentication null means the request user is not logged in a stateful session
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails))) {
