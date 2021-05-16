@@ -46,18 +46,6 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
         // JPA - need to create the UserDetailsService - not about JPA itself
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
-
-        // JDBC - H2 automatically configured - automatically create tables from resource data.sql and schema.sql
-//        auth.jdbcAuthentication()
-//                .passwordEncoder(passwordEncoder)
-//                .dataSource(dataSource)
-//                // Custom Query when your schema is different - default table names are 'users' and 'authorities'
-//                .usersByUsernameQuery("SELECT username, password, enabled " +
-//                        "FROM my_users " +
-//                        "WHERE username = ?")
-//                .authoritiesByUsernameQuery("SELECT username, authority " +
-//                        "FROM my_authorities " +
-//                        "WHERE username = ?");
     }
 
     // AUTHORIZATION
