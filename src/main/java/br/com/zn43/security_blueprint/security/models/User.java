@@ -1,23 +1,19 @@
 package br.com.zn43.security_blueprint.security.models;
 
+import br.com.zn43.security_blueprint.security.utils.RolesUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(schema = "myschema", name = "tb_user")
 public class User implements UserDetails {
-
-    public static final String REGEX_ROLES = ",";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,14 +33,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(roles.split(REGEX_ROLES))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
-
-    public Collection<String> getAuthoritiesStringList() {
-        return Arrays.stream(roles.split(REGEX_ROLES))
-                .collect(Collectors.toList());
+        return RolesUtil.splitRoles(this.roles);
     }
 
     @Override

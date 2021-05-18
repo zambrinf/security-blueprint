@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackageClasses = UserRepositoryJPA.class)
 public class SecurityBlueprintApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SecurityBlueprintApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SecurityBlueprintApplication.class, args);
+    }
 
 }

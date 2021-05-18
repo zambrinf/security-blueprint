@@ -19,6 +19,15 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -29,18 +38,6 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPassowrdEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
 
     // AUTHENTICATION - the builder can support multiple authentication providers
     @Override
@@ -57,7 +54,10 @@ public class CustomWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/admin").hasAnyRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER")
                 .antMatchers("/authenticate").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()

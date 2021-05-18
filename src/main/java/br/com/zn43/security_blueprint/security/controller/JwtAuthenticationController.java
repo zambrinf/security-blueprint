@@ -2,7 +2,6 @@ package br.com.zn43.security_blueprint.security.controller;
 
 import br.com.zn43.security_blueprint.security.models.AuthenticationRequest;
 import br.com.zn43.security_blueprint.security.models.AuthenticationResponse;
-import br.com.zn43.security_blueprint.security.models.User;
 import br.com.zn43.security_blueprint.security.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +35,13 @@ public class JwtAuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authRequest) {
         try {
-            return getJwt(authRequest);
+            return generateJwt(authRequest);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("INCORRET USERNAME OR PASSWORD");
         }
     }
 
-    private ResponseEntity<AuthenticationResponse> getJwt(AuthenticationRequest authRequest) {
+    private ResponseEntity<AuthenticationResponse> generateJwt(AuthenticationRequest authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
