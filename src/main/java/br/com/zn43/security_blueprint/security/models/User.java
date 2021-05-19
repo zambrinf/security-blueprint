@@ -12,7 +12,7 @@ import java.util.Collection;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(schema = "myschema", name = "tb_user")
+@Table(name = "tb_user")
 public class User implements UserDetails {
 
     @Id
