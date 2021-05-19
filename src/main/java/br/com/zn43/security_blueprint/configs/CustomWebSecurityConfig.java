@@ -1,6 +1,6 @@
-package br.com.zn43.security_blueprint.security.configs;
+package br.com.zn43.security_blueprint.configs;
 
-import br.com.zn43.security_blueprint.security.filters.JwtRequestFilter;
+import br.com.zn43.security_blueprint.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

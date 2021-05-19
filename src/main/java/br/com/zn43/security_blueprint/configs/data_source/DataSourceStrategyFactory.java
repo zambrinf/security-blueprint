@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint.security.configs.data_source;
+package br.com.zn43.security_blueprint.configs.data_source;
 
 public enum DataSourceStrategyFactory {
 

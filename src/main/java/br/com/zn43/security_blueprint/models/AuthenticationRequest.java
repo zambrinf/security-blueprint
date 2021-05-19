@@ -1,4 +1,4 @@
-package br.com.zn43.security_blueprint.security.models;
+package br.com.zn43.security_blueprint.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package br.com.zn43.security_blueprint.security.models;
+package br.com.zn43.security_blueprint.models;
 
-import br.com.zn43.security_blueprint.security.utils.RolesUtil;
+import br.com.zn43.security_blueprint.utils.RolesUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
