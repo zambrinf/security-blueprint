@@ -11,9 +11,10 @@ public class PostgresStrategy implements DataSourceBuildStrategy {
     @Override
     public DataSource build() {
         DataSourceBuilder<?> builder = DataSourceBuilder.create();
-        builder.url("jdbc:h2:mem:testdb");
-        builder.username("SA");
-        builder.password("");
+        builder.driverClassName("org.postgresql.Driver");
+        builder.url("jdbc:postgresql://localhost:5432/mydb?currentSchema=myschema");
+        builder.username("myuser");
+        builder.password("mypass");
         return builder.build();
     }
 
